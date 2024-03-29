@@ -14,31 +14,61 @@ public class ArticlesLoader {
     private static Pattern EXTRACTION_PATTERN = Pattern
             .compile("<PLACES>(.*?)</PLACES>.*?<TITLE>(.*?)</TITLE>.*?<BODY>(.*?)</BODY>", Pattern.DOTALL);
 
-    private static ArrayList<Article> parseFile(String fileData, int amount) {
+    private static ArrayList<Article> parseFile(String fileData, int amount, String all) {
         ArrayList<Article> allArticles = new ArrayList<>();
         Matcher matcher = EXTRACTION_PATTERN.matcher("articles/" + fileData);
         int number = 0;
-        while (matcher.find() && number < amount) {
-            List<String> places = getSeparatedPlaces(matcher.group(1).replaceAll("&lt;", "<"));
-            String title = matcher.group(2).replaceAll("&lt;", "<");
-            String body = matcher.group(3).replaceAll("&lt;", "<");
-            if(places.size() == 1 && classes.contains(places.get(0)))
-            {
-                String place = places.get(0);
-                body = body.replaceAll("Reuter", "");
-                body = body.replaceAll("&#3;", "");
-                body = body.trim();
-                allArticles.add(new Article(body, place, title));
-                number += 1;
+        if (all == null){
+            while (matcher.find() && number < amount) {
+                List<String> places = getSeparatedPlaces(matcher.group(1).replaceAll("&lt;", "<"));
+                String title = matcher.group(2).replaceAll("&lt;", "<");
+                String body = matcher.group(3).replaceAll("&lt;", "<");
+                if(places.size() == 1 && classes.contains(places.get(0)))
+                {
+                    String place = places.get(0);
+                    body = body.replaceAll("Reuter", "");
+                    body = body.replaceAll("&#3;", "");
+                    body = body.trim();
+                    allArticles.add(new Article(body, place, title));
+                    number += 1;
+                }
+            }
+        } else {
+            while (matcher.find()) {
+                List<String> places = getSeparatedPlaces(matcher.group(1).replaceAll("&lt;", "<"));
+                String title = matcher.group(2).replaceAll("&lt;", "<");
+                String body = matcher.group(3).replaceAll("&lt;", "<");
+                if(places.size() == 1 && classes.contains(places.get(0)))
+                {
+                    String place = places.get(0);
+                    body = body.replaceAll("Reuter", "");
+                    body = body.replaceAll("&#3;", "");
+                    body = body.trim();
+                    allArticles.add(new Article(body, place, title));
+                }
             }
         }
         return allArticles;
     }
 
-    public static List<Article> loadData(String filePath, int amount) throws IOException {
+    public static List<Article> loadData(int amount, String all) throws IOException {
         List<Article> articles = new ArrayList<>();
-        File file = new File("articles/" + filePath);
-        articles.addAll(ArticlesLoader.parseFile(Files.readString(file.toPath()), amount));
+        File directory = new File("articles/");
+        File[] files = directory.listFiles();
+
+        assert files != null;
+        for (File file : files) {
+            if (all == null) {
+                if (articles.size() >= amount) {
+                    break;
+                }
+                List<Article> parsedArticles = ArticlesLoader.parseFile(Files.readString(file.toPath()), amount - articles.size(), null);
+                articles.addAll(parsedArticles);
+            } else {
+                List<Article> parsedArticles = ArticlesLoader.parseFile(Files.readString(file.toPath()), amount, all);
+                articles.addAll(parsedArticles);
+            }
+        }
         return articles;
     }
 

@@ -30,12 +30,13 @@ public class Main {
 //       System.out.println(dictionaries.getCountries());
         List<Article> ar;
         try {
-            ar = ArticlesLoader.loadData("reut2-001.sgm", 2);
+            ar = ArticlesLoader.loadData(10, "all");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        for (Article article : ar) {
+        for (Article article: ar) {
             System.out.println(article.toString());
         }
+        System.out.println(ar.size());
     }
 }
