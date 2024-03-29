@@ -1,0 +1,71 @@
+USA:
+New York City
+Los Angeles
+Chicago
+Houston
+Phoenix
+Philadelphia
+San Antonio
+San Diego
+Dallas
+San Jose
+
+UK:
+London
+Birmingham
+Manchester
+Glasgow
+Edinburgh
+Liverpool
+Leeds
+Bristol
+Sheffield
+Newcastle upon Tyne
+
+Germany:
+Berlin
+Hamburg
+Munich
+Cologne
+Frankfurt
+Stuttgart
+Düsseldorf
+Dortmund
+Essen
+Leipzig
+
+Japan:
+Tokyo
+Yokohama
+Osaka
+Nagoya
+Sapporo
+Fukuoka
+Kobe
+Kyoto
+Kawasaki
+Saitama
+
+France:
+Paris
+Marseille
+Lyon
+Toulouse
+Nice
+Nantes
+Strasbourg
+Montpellier
+Bordeaux
+Lille
+
+Canada:
+Toronto
+Montreal
+Vancouver
+Calgary
+Ottawa
+Edmonton
+Quebec City
+Winnipeg
+Hamilton
+Kitchener
