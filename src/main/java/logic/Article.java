@@ -1,4 +1,4 @@
-package org.example;
+package logic;
 
 public class Article {
     private String body;

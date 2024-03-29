@@ -1,6 +1,5 @@
-package org.example;
+package logic;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.io.*;
 import java.util.*;
 
