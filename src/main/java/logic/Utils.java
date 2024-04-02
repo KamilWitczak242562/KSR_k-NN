@@ -3,8 +3,7 @@ package logic;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Utils {
 
@@ -31,26 +30,28 @@ public class Utils {
     }
 
     public static Double czebyszew(List<Object> vec1, List<Object> vec2) {
-        double distance = 0.0;
+        List<Double> distance = new ArrayList<>();
         for (int i =0; i <vec1.size();i++){
             if (vec1.get(i).getClass() == String.class) {
-
+                distance.add(bi_gram(vec1.get(i).toString(), vec2.get(i).toString()));
             } else {
-
+                List<Integer> vecInside1 = (List<Integer>) vec1.get(i);
+                List<Integer> vecInside2 = (List<Integer>) vec2.get(i);
+                List<Double> sum = new ArrayList<>();
+                for (int j = 0; j < vecInside1.size(); j++) {
+                    sum.add((double)Math.abs(vecInside1.get(j) - vecInside2.get(j)));
+                }
+                distance.add(Collections.max(sum));
             }
         }
-        return 0.0;
+        BigDecimal result = BigDecimal.valueOf(Collections.max(distance));
+
+        BigDecimal roundedValue = result.setScale(2, RoundingMode.HALF_UP);
+
+        return roundedValue.doubleValue();
     }
 
     public static Double urban(List<Object> vec1, List<Object> vec2) {
-        double distance = 0.0;
-        for (int i =0; i <vec1.size();i++){
-            if (vec1.get(i).getClass() == String.class) {
-
-            } else {
-
-            }
-        }
         return 0.0;
     }
 

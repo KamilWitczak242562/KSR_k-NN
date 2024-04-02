@@ -52,7 +52,7 @@ public class Main {
                 "Albert Einstein", Arrays.asList(1, 0, 1, 0, 0, 0), "Paul",
                 "Labour Day", Arrays.asList(2, 0, 1, 0, 0, 0), "kg", "Berlin"
         );
-        double test = Utils.euklides(data1, additionalData);
+        double test = Utils.czebyszew(data1, additionalData);
         System.out.println(test);
     }
 }
