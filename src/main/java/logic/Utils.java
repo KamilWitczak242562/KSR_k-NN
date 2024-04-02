@@ -52,7 +52,25 @@ public class Utils {
     }
 
     public static Double urban(List<Object> vec1, List<Object> vec2) {
-        return 0.0;
+        double distance = 0.0;
+        for (int i =0; i <vec1.size();i++){
+            if (vec1.get(i).getClass() == String.class) {
+                distance += bi_gram(vec1.get(i).toString(), vec2.get(i).toString());
+            } else {
+                List<Integer> vecInside1 = (List<Integer>) vec1.get(i);
+                List<Integer> vecInside2 = (List<Integer>) vec2.get(i);
+                double sum = 0.0;
+                for (int j = 0; j < vecInside1.size(); j++) {
+                    sum += Math.abs(vecInside1.get(j) - vecInside2.get(j));
+                }
+                distance += sum;
+            }
+        }
+        BigDecimal result = BigDecimal.valueOf(distance);
+
+        BigDecimal roundedValue = result.setScale(2, RoundingMode.HALF_UP);
+
+        return roundedValue.doubleValue();
     }
 
     public static Double bi_gram(String firstWord, String secondWord) {
