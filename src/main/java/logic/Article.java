@@ -1,9 +1,12 @@
 package logic;
 
+import java.util.List;
+
 public class Article {
     private String body;
     private String place;
     private String title;
+    private List<Object> vector;
 
     public Article(String body, String place, String title) {
         this.body = body;

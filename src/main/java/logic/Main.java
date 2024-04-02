@@ -1,6 +1,8 @@
 package logic;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -38,7 +40,19 @@ public class Main {
 //            System.out.println(article.toString());
 //        }
 //        System.out.println(ar.size());
-        double test = Utils.bi_gram("kaczka", "kaczy");
+//        double test = Utils.bi_gram("kaczka", "kaczy");
+//        System.out.println(test);
+        List<Object> data1 = new ArrayList<>(Arrays.asList(
+                "Statue of Liberty", "Toronto", Arrays.asList(0, 5, 3, 0, 2, 1), "USD",
+                "George Washington", Arrays.asList(0, 1, 0, 0, 1, 0), "John",
+                "Thanksgiving", Arrays.asList(0, 3, 0, 0, 1, 0), "yard", "Texas"
+        ));
+        List<Object> additionalData = Arrays.asList(
+                "Tower of London", "Berlin", Arrays.asList(4, 2, 3, 0, 0, 1), "marks",
+                "Albert Einstein", Arrays.asList(1, 0, 1, 0, 0, 0), "Paul",
+                "Labour Day", Arrays.asList(2, 0, 1, 0, 0, 0), "kg", "Berlin"
+        );
+        double test = Utils.euklides(data1, additionalData);
         System.out.println(test);
     }
 }
