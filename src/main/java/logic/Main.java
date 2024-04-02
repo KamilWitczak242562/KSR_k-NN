@@ -28,15 +28,17 @@ public class Main {
 //       System.out.println(dictionaries.getCurrency());
 //       System.out.println(dictionaries.getStandards());
 //       System.out.println(dictionaries.getCountries());
-        List<Article> ar;
-        try {
-            ar = ArticlesLoader.loadData(10, "all");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        for (Article article: ar) {
-            System.out.println(article.toString());
-        }
-        System.out.println(ar.size());
+//        List<Article> ar;
+//        try {
+//            ar = ArticlesLoader.loadData(10, "all");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        for (Article article: ar) {
+//            System.out.println(article.toString());
+//        }
+//        System.out.println(ar.size());
+        double test = Utils.bi_gram("kaczka", "kaczy");
+        System.out.println(test);
     }
 }
