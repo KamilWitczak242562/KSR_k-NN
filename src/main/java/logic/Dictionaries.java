@@ -16,7 +16,9 @@ public class Dictionaries {
     private List<List<String>> geographical;
     private List<String> standards;
 
-    public Dictionaries() {
+    private static Dictionaries dictionaries;
+
+    private Dictionaries() {
         this.characteristicPlaces = new ArrayList<>();
         this.years = new ArrayList<>();
         this.towns = new ArrayList<>();
@@ -28,6 +30,28 @@ public class Dictionaries {
         this.geographical = new ArrayList<>();
         this.administration = new ArrayList<>();
         this.standards = new ArrayList<>();
+        loadAll();
+    }
+
+    public static Dictionaries getDictionaries() {
+        if (dictionaries == null) {
+            dictionaries = new Dictionaries();
+        }
+        return dictionaries;
+    }
+
+    private void loadAll() {
+        loadDictionary("places.txt", this.getCharacteristicPlaces());
+        loadDictionary("administration.txt", this.getAdministration());
+        loadDictionary("dates.txt", this.getYears());
+        loadDictionary("famous.txt", this.getFamousPeople());
+        loadDictionary("geographical.txt", this.getGeographical());
+        loadDictionary("holidays.txt", this.getHolidays());
+        loadDictionary("names.txt", this.getNames());
+        loadDictionary("towns.txt", this.getTowns());
+        initCountries();
+        initCurrency();
+        initStandards();
     }
 
     public void loadDictionary(String filePath, List<List<String>> list) {
