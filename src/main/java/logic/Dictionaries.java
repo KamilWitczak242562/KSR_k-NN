@@ -7,7 +7,7 @@ public class Dictionaries {
     private List<List<String>> characteristicPlaces;
     private List<List<String>> years;
     private List<List<String>> towns;
-    private Map<String, List<String>> countries;
+    private List<List<String>> countries;
     private List<String> currency;
     private List<List<String>> famousPeople;
     private List<List<String>> names;
@@ -22,7 +22,7 @@ public class Dictionaries {
         this.characteristicPlaces = new ArrayList<>();
         this.years = new ArrayList<>();
         this.towns = new ArrayList<>();
-        this.countries = new HashMap<>();
+        this.countries = new ArrayList<>();
         this.currency = new ArrayList<>();
         this.famousPeople = new ArrayList<>();
         this.names = new ArrayList<>();
@@ -61,7 +61,7 @@ public class Dictionaries {
             boolean lineAfterBlank = false;
             int index = 0;
             while ((line = reader.readLine()) != null) {
-                if (isFirstLine){
+                if (isFirstLine) {
                     isFirstLine = false;
                     continue;
                 }
@@ -101,7 +101,7 @@ public class Dictionaries {
         return towns;
     }
 
-    public Map<String, List<String>> getCountries() {
+    public List<List<String>> getCountries() {
         return countries;
     }
 
@@ -185,12 +185,12 @@ public class Dictionaries {
             add("French");
             add("FR");
         }};
-        this.countries.put("USA", usa);
-        this.countries.put("UK", uk);
-        this.countries.put("GER", ger);
-        this.countries.put("JPN", jpn);
-        this.countries.put("CND", cnd);
-        this.countries.put("FR", fr);
+        this.countries.add(usa);
+        this.countries.add(uk);
+        this.countries.add(ger);
+        this.countries.add(jpn);
+        this.countries.add(cnd);
+        this.countries.add(fr);
     }
 
     public List<List<String>> getFamousPeople() {

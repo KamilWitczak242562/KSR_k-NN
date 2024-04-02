@@ -31,9 +31,6 @@ public class Article {
         this.vector.add(result);
     }
 
-    /**
-     * Add checking title
-     */
     public void addSecondChar() {
         Map<String, Integer> occurrence = new HashMap<>();
         for (List<String> list : Dictionaries.getDictionaries().getTowns()) {
@@ -50,6 +47,14 @@ public class Article {
                         }
                         index += townLength;
                     }
+                    if (title.contains(town)) {
+                        if (occurrence.containsKey(town)) {
+                            int occ = occurrence.get(town);
+                            occurrence.put(town, occ + 2);
+                        } else {
+                            occurrence.put(town, 2);
+                        }
+                    }
                 }
             }
         }
@@ -57,11 +62,26 @@ public class Article {
         this.vector.add(result);
     }
 
-    /**
-     * To implement
-     */
     public void addThirdChar() {
-
+        List<Integer> countries = new ArrayList<>();
+        for (List<String> list : Dictionaries.getDictionaries().getCountries()) {
+            int amount = 0;
+            for (String country : list) {
+                int index = 0;
+                int geoLength = country.length();
+                while ((index = body.indexOf(country, index)) != -1) {
+                    if (body.contains(country)) {
+                        amount += 1;
+                        index += geoLength;
+                    }
+                }
+                if (title.contains(country)) {
+                    amount += 2;
+                }
+            }
+            countries.add(amount);
+        }
+        this.vector.add(countries);
     }
 
     public void addFourthChar() {
@@ -99,11 +119,19 @@ public class Article {
         this.vector.add(result);
     }
 
-    /**
-     * To implement
-     */
     public void addSixthChar() {
-
+        List<Integer> dates = new ArrayList<>();
+        for (List<String> list : Dictionaries.getDictionaries().getYears()) {
+            int amount = 0;
+            for (String date : list) {
+                if (body.contains(date)) {
+                    amount += 1;
+                    break;
+                }
+            }
+            dates.add(amount);
+        }
+        this.vector.add(dates);
     }
 
     public void addSeventhChar() {
@@ -143,11 +171,23 @@ public class Article {
         this.vector.add(result);
     }
 
-    /**
-     * To implement
-     */
     public void addNinthChar() {
-
+        List<Integer> geos = new ArrayList<>();
+        for (List<String> list : Dictionaries.getDictionaries().getGeographical()) {
+            int amount = 0;
+            for (String geo : list) {
+                int index = 0;
+                int geoLength = geo.length();
+                while ((index = body.indexOf(geo, index)) != -1) {
+                    if (body.contains(geo)) {
+                        amount += 1;
+                        index += geoLength;
+                    }
+                }
+            }
+            geos.add(amount);
+        }
+        this.vector.add(geos);
     }
 
     public void addTenthChar() {

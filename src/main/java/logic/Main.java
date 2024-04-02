@@ -3,6 +3,7 @@ package logic;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -40,9 +41,6 @@ public class Main {
             article.addNinthChar();
             article.addTenthChar();
             article.addEleventhChar();
-            if (article.getVector().get(7) != null) {
-                System.out.println(article.getVector().get(7));
-            }
         }
     }
 }
