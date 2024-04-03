@@ -29,18 +29,16 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        int index = 0;
         for (Article article: allArticles) {
-            article.addFirstChar();
-            article.addSecondChar();
-            article.addThirdChar();
-            article.addFourthChar();
-            article.addFifthChar();
-            article.addSixthChar();
-            article.addSeventhChar();
-            article.addEighthChar();
-            article.addNinthChar();
-            article.addTenthChar();
-            article.addEleventhChar();
+            if (index % 2 == 0) {
+                article.setFoundPlace(article.getPlace());
+            } else {
+                article.setFoundPlace("uk");
+            }
+            index +=1;
         }
+        double test = Utils.f_1(Utils.precision(allArticles, "usa"), Utils.recall(allArticles, "usa"));
+        System.out.println(test);
     }
 }

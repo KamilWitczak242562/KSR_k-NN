@@ -6,6 +6,59 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 public class Utils {
+    public static Double accuracy(List<Article> articles) {
+        double amount = 0.0;
+        for (Article article: articles) {
+            if (article.getPlace().equals(article.getFoundPlace())) {
+                amount += 1.0;
+            }
+        }
+        BigDecimal bigAmount = BigDecimal.valueOf(amount);
+        BigDecimal size = BigDecimal.valueOf(articles.size());
+        BigDecimal result = bigAmount.divide(size, 2, RoundingMode.HALF_UP);
+        return result.doubleValue();
+    }
+
+    public static Double precision(List<Article> articles, String country) {
+        double amount = 0.0;
+        double meter = 0.0;
+        for (Article article: articles) {
+            if (article.getFoundPlace().equals(country) && article.getPlace().equals(country)) {
+                meter += 1.0;
+            }
+            if (article.getFoundPlace().equals(country)) {
+                amount += 1.0;
+            }
+        }
+        BigDecimal bigAmount = BigDecimal.valueOf(amount);
+        BigDecimal bigMeter = BigDecimal.valueOf(meter);
+        BigDecimal result = bigMeter.divide(bigAmount, 2, RoundingMode.HALF_UP);
+        return result.doubleValue();
+    }
+
+    public static Double recall(List<Article> articles, String country) {
+        double amount = 0.0;
+        double meter = 0.0;
+        for (Article article: articles) {
+            if (article.getFoundPlace().equals(country) && article.getPlace().equals(country)) {
+                meter += 1.0;
+            }
+            if (article.getPlace().equals(country)) {
+                amount += 1.0;
+            }
+        }
+        BigDecimal bigAmount = BigDecimal.valueOf(amount);
+        BigDecimal bigMeter = BigDecimal.valueOf(meter);
+        BigDecimal result = bigMeter.divide(bigAmount, 2, RoundingMode.HALF_UP);
+        return result.doubleValue();
+    }
+
+    public static Double f_1(double precision, double recall){
+        BigDecimal bigPrecision = BigDecimal.valueOf(precision);
+        BigDecimal bigRecall = BigDecimal.valueOf(recall);
+        BigDecimal result = BigDecimal.TWO.multiply(bigPrecision.multiply(bigRecall).divide(bigPrecision.add(bigRecall), 2, RoundingMode.HALF_UP));
+        return result.doubleValue();
+    }
 
     public static Double euklides(List<Object> vec1, List<Object> vec2) {
         double distance = 0.0;

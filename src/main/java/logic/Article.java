@@ -266,6 +266,26 @@ public class Article {
                 '}';
     }
 
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setVector(List<Object> vector) {
+        this.vector = vector;
+    }
+
+    public void setFoundPlace(String foundPlace) {
+        this.foundPlace = foundPlace;
+    }
+
     public String getBody() {
         return body;
     }
