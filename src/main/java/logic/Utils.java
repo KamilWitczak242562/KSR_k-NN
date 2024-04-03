@@ -8,7 +8,7 @@ import java.util.*;
 public class Utils {
     public static Double accuracy(List<Article> articles) {
         double amount = 0.0;
-        for (Article article: articles) {
+        for (Article article : articles) {
             if (article.getPlace().equals(article.getFoundPlace())) {
                 amount += 1.0;
             }
@@ -22,7 +22,7 @@ public class Utils {
     public static Double precision(List<Article> articles, String country) {
         double amount = 0.0;
         double meter = 0.0;
-        for (Article article: articles) {
+        for (Article article : articles) {
             if (article.getFoundPlace().equals(country) && article.getPlace().equals(country)) {
                 meter += 1.0;
             }
@@ -39,7 +39,7 @@ public class Utils {
     public static Double recall(List<Article> articles, String country) {
         double amount = 0.0;
         double meter = 0.0;
-        for (Article article: articles) {
+        for (Article article : articles) {
             if (article.getFoundPlace().equals(country) && article.getPlace().equals(country)) {
                 meter += 1.0;
             }
@@ -53,7 +53,7 @@ public class Utils {
         return result.doubleValue();
     }
 
-    public static Double f_1(double precision, double recall){
+    public static Double f_1(double precision, double recall) {
         BigDecimal bigPrecision = BigDecimal.valueOf(precision);
         BigDecimal bigRecall = BigDecimal.valueOf(recall);
         BigDecimal result = BigDecimal.TWO.multiply(bigPrecision.multiply(bigRecall).divide(bigPrecision.add(bigRecall), 2, RoundingMode.HALF_UP));
@@ -62,7 +62,7 @@ public class Utils {
 
     public static Double euklides(List<Object> vec1, List<Object> vec2) {
         double distance = 0.0;
-        for (int i =0; i <vec1.size();i++){
+        for (int i = 0; i < vec1.size(); i++) {
             if (vec1.get(i).getClass() == String.class) {
                 distance += bi_gram(vec1.get(i).toString(), vec2.get(i).toString());
             } else {
@@ -84,7 +84,7 @@ public class Utils {
 
     public static Double czebyszew(List<Object> vec1, List<Object> vec2) {
         List<Double> distance = new ArrayList<>();
-        for (int i =0; i <vec1.size();i++){
+        for (int i = 0; i < vec1.size(); i++) {
             if (vec1.get(i).getClass() == String.class) {
                 distance.add(bi_gram(vec1.get(i).toString(), vec2.get(i).toString()));
             } else {
@@ -92,7 +92,7 @@ public class Utils {
                 List<Integer> vecInside2 = (List<Integer>) vec2.get(i);
                 List<Double> sum = new ArrayList<>();
                 for (int j = 0; j < vecInside1.size(); j++) {
-                    sum.add((double)Math.abs(vecInside1.get(j) - vecInside2.get(j)));
+                    sum.add((double) Math.abs(vecInside1.get(j) - vecInside2.get(j)));
                 }
                 distance.add(Collections.max(sum));
             }
@@ -106,7 +106,7 @@ public class Utils {
 
     public static Double urban(List<Object> vec1, List<Object> vec2) {
         double distance = 0.0;
-        for (int i =0; i <vec1.size();i++){
+        for (int i = 0; i < vec1.size(); i++) {
             if (vec1.get(i).getClass() == String.class) {
                 distance += bi_gram(vec1.get(i).toString(), vec2.get(i).toString());
             } else {

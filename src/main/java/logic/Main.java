@@ -9,36 +9,98 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-//        List<Object> data1 = new ArrayList<>(Arrays.asList(
-//                "Statue of Liberty", "Toronto", Arrays.asList(0, 5, 3, 0, 2, 1), "USD",
-//                "George Washington", Arrays.asList(0, 1, 0, 0, 1, 0), "John",
-//                "Thanksgiving", Arrays.asList(0, 3, 0, 0, 1, 0), "yard", "Texas"
-//        ));
-//        List<Object> additionalData = Arrays.asList(
-//                "Tower of London", "Berlin", Arrays.asList(4, 2, 3, 0, 0, 1), "marks",
-//                "Albert Einstein", Arrays.asList(1, 0, 1, 0, 0, 0), "Paul",
-//                "Labour Day", Arrays.asList(2, 0, 1, 0, 0, 0), "kg", "Berlin"
-//        );
-//        double test = Utils.urban(data1, additionalData);
-//        System.out.println(test);
-
         List<Article> allArticles;
-
         try {
-            allArticles = ArticlesLoader.loadData(20000, "all");
+            allArticles = ArticlesLoader.loadData(3000, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        int index = 0;
-        for (Article article: allArticles) {
-            if (index % 2 == 0) {
-                article.setFoundPlace(article.getPlace());
-            } else {
-                article.setFoundPlace("uk");
-            }
-            index +=1;
+        for (Article article : allArticles) {
+            article.addFirstChar();
+            article.addSecondChar();
+            article.addThirdChar();
+            article.addFourthChar();
+            article.addFifthChar();
+            article.addSixthChar();
+            article.addSeventhChar();
+            article.addEighthChar();
+            article.addNinthChar();
+            article.addTenthChar();
+            article.addEleventhChar();
         }
-        double test = Utils.f_1(Utils.precision(allArticles, "usa"), Utils.recall(allArticles, "usa"));
-        System.out.println(test);
+//        int t = 0;
+//        for (Article article : allArticles) {
+//            if (article.getPlace().equals("japan")) {
+//                t += 1;
+//            }
+//        }
+//        List<List<Article>> ar = new ArrayList<>(){{
+//            add(new ArrayList<>()); add(new ArrayList<>()); add(new ArrayList<>()); add(new ArrayList<>());
+//            add(new ArrayList<>()); add(new ArrayList<>()); add(new ArrayList<>());
+//        }};
+//        for (Article article: allArticles){
+//            switch (article.getPlace()){
+//                case "usa":
+//                    if (ar.get(0).size() < t){
+//                        ar.get(0).add(article);
+//                    }
+//                    break;
+//                case "uk":
+//                    if (ar.get(1).size() < t){
+//                        ar.get(1).add(article);
+//                    }
+//                    break;
+//                case "canada":
+//                    if (ar.get(2).size() < t){
+//                        ar.get(2).add(article);
+//                    }
+//                    break;
+//                case "west-germany":
+//                    if (ar.get(3).size() < t){
+//                        ar.get(3).add(article);
+//                    }
+//                    break;
+//                case "france":
+//                    if (ar.get(4).size() < t){
+//                        ar.get(4).add(article);
+//                    }
+//                    break;
+//                case "japan":
+//                    if (ar.get(5).size() < t){
+//                        ar.get(5).add(article);
+//                    }
+//                    break;
+//            }
+//        }
+//        List<Article> ab = new ArrayList<>();
+//        for (int i = 0; i < ar.size(); i++) {
+//            ab.addAll(ar.get(i));
+//        }
+        kNN kNN = new kNN(allArticles, 5, "test", 20);
+        kNN.predict();
+        List<Article> test = kNN.getTestArticles();
+        for (Article article : test) {
+            if (article.getFoundPlace() == null) System.out.println(article.getFoundPlace());
+        }
+
+        double acc = Utils.accuracy(test);
+        int k = 0;
+        int n = 0;
+        for (Article article : test) {
+            if (article.getPlace().equals(article.getFoundPlace())) {
+                k += 1;
+            }
+            if (!article.getFoundPlace().equals("usa")) {
+                System.out.println(article.getPlace() + "    " + article.getFoundPlace());
+                System.out.println();
+            }
+            if (article.getPlace().equals("usa")) {
+                n += 1;
+            }
+        }
+        System.out.println(acc);
+        System.out.println(k);
+        System.out.println(test.size());
+        System.out.println(n);
     }
 }

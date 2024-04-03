@@ -28,7 +28,7 @@ public class Article {
             }
         }
         String result = checkMinMax(false, indexes);
-        this.vector.add(result);
+        this.vector.add(Objects.requireNonNullElse(result, ""));
     }
 
     public void addSecondChar() {
@@ -47,19 +47,19 @@ public class Article {
                         }
                         index += townLength;
                     }
-                    if (title.contains(town)) {
-                        if (occurrence.containsKey(town)) {
-                            int occ = occurrence.get(town);
-                            occurrence.put(town, occ + 2);
-                        } else {
-                            occurrence.put(town, 2);
-                        }
+                }
+                if (title.contains(town)) {
+                    if (occurrence.containsKey(town)) {
+                        int occ = occurrence.get(town);
+                        occurrence.put(town, occ + 2);
+                    } else {
+                        occurrence.put(town, 2);
                     }
                 }
             }
         }
         String result = checkMinMax(true, occurrence);
-        this.vector.add(result);
+        this.vector.add(Objects.requireNonNullElse(result, ""));
     }
 
     public void addThirdChar() {
@@ -102,7 +102,7 @@ public class Article {
             }
         }
         String result = checkMinMax(true, occurrence);
-        this.vector.add(result);
+        this.vector.add(Objects.requireNonNullElse(result, ""));
     }
 
     public void addFifthChar() {
@@ -116,9 +116,12 @@ public class Article {
             }
         }
         String result = checkMinMax(false, indexes);
-        this.vector.add(result);
+        this.vector.add(Objects.requireNonNullElse(result, ""));
     }
 
+    /**
+     * TODO spaces
+     */
     public void addSixthChar() {
         List<Integer> dates = new ArrayList<>();
         for (List<String> list : Dictionaries.getDictionaries().getYears()) {
@@ -154,7 +157,7 @@ public class Article {
             }
         }
         String result = checkMinMax(true, occurrence);
-        this.vector.add(result);
+        this.vector.add(Objects.requireNonNullElse(result, ""));
     }
 
     public void addEighthChar() {
@@ -168,7 +171,7 @@ public class Article {
             }
         }
         String result = checkMinMax(false, indexes);
-        this.vector.add(result);
+        this.vector.add(Objects.requireNonNullElse(result, ""));
     }
 
     public void addNinthChar() {
@@ -208,7 +211,7 @@ public class Article {
                 }
         }
         String result = checkMinMax(true, occurrence);
-        this.vector.add(result);
+        this.vector.add(Objects.requireNonNullElse(result, ""));
     }
 
     public void addEleventhChar() {
@@ -231,7 +234,7 @@ public class Article {
             }
         }
         String result = checkMinMax(true, occurrence);
-        this.vector.add(result);
+        this.vector.add(Objects.requireNonNullElse(result, ""));
     }
 
     private String checkMinMax(boolean max, Map<String, Integer> maptoCheck) {
@@ -255,6 +258,19 @@ public class Article {
             }
         }
         return output;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Article article = (Article) o;
+        return Objects.equals(body, article.body) && Objects.equals(place, article.place) && Objects.equals(title, article.title) && Objects.equals(vector, article.vector) && Objects.equals(foundPlace, article.foundPlace);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(body, place, title, vector, foundPlace);
     }
 
     @Override
