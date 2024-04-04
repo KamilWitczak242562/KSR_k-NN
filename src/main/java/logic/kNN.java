@@ -11,17 +11,25 @@ public class kNN {
     public kNN(List<Article> articles, Integer k, String classification, double percentage) {
         this.k = k;
         this.classification = classification;
+        normalize(articles);
         createLists(articles, percentage);
     }
 
-    /**
-     * TODO classification
-     */
     public void predict() {
         Map<Article, Double> articlesWithDistances = new LinkedHashMap<>();
         for (Article article : this.testArticles) {
             for (Article articleTrain : this.trainArticles) {
-                articlesWithDistances.put(articleTrain, Utils.euklides(article.getVector(), articleTrain.getVector()));
+                switch (this.classification){
+                    case "Euklidesowa":
+                        articlesWithDistances.put(articleTrain, Utils.euklides(article.getVector(), articleTrain.getVector()));
+                        break;
+                    case "Czebyszewa":
+                        articlesWithDistances.put(articleTrain, Utils.czebyszew(article.getVector(), articleTrain.getVector()));
+                        break;
+                    case "Miejska":
+                        articlesWithDistances.put(articleTrain, Utils.urban(article.getVector(), articleTrain.getVector()));
+                        break;
+                }
             }
             articlesWithDistances = sortMap(articlesWithDistances);
             Set<Map.Entry<Article, Double>> entrySet = articlesWithDistances.entrySet();
@@ -105,20 +113,41 @@ public class kNN {
         this.testArticles = new ArrayList<>(articles.subList(firstListSize, totalSize));
     }
 
-    /**
-     * TODO implement
-     */
     public void normalize(List<Article> articles) {
         List<List<Double>> features = new ArrayList<>();
-        List<Double> featuresMax = new ArrayList<>();
-        for (Article article : articles) {
-            for (int i = 0; i < article.getVector().size(); i++) {
-                if (article.getVector().get(i).getClass() != String.class) {
+        for (int i = 0; i < 18; i++) {
+            features.add(new ArrayList<>());
+        }
 
+        int j = 0;
+        for (Article article : articles) {
+            for (Object vectorElement : article.getVector()) {
+                if (vectorElement instanceof List) {
+                    List<Double> vector = (List<Double>) vectorElement;
+                    for (int k = 0; k < Math.min(6, vector.size()); k++, j++) {
+                        features.get(j % features.size()).add(vector.get(k));
+                    }
                 }
             }
         }
 
+        j = 0;
+        for (Article article : articles) {
+            for (Object vectorElement : article.getVector()) {
+                if (vectorElement instanceof List) {
+                    List<Double> vector = (List<Double>) vectorElement;
+                    for (int k = 0; k < Math.min(6, vector.size()); k++, j++) {
+                        double min = Collections.min(features.get(j % features.size()));
+                        double max = Collections.max(features.get(j % features.size()));
+                        double value = (vector.get(k) - min) / (max - min);
+                        if (Double.isNaN(value)) {
+                            value = 0.0;
+                        }
+                        vector.set(k, value);
+                    }
+                }
+            }
+        }
     }
 
     public List<Article> getTestArticles() {

@@ -6,6 +6,57 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 public class Utils {
+    public static List<Article> articlesAlignment(List<Article> articles, String country) {
+        int t = 0;
+        for (Article article : articles) {
+            if (article.getPlace().equals(country)) {
+                t += 1;
+            }
+        }
+        List<List<Article>> ar = new ArrayList<>(){{
+            add(new ArrayList<>()); add(new ArrayList<>()); add(new ArrayList<>()); add(new ArrayList<>());
+            add(new ArrayList<>()); add(new ArrayList<>()); add(new ArrayList<>());
+        }};
+        for (Article article: articles){
+            switch (article.getPlace()){
+                case "usa":
+                    if (ar.get(0).size() < t){
+                        ar.get(0).add(article);
+                    }
+                    break;
+                case "uk":
+                    if (ar.get(1).size() < t){
+                        ar.get(1).add(article);
+                    }
+                    break;
+                case "canada":
+                    if (ar.get(2).size() < t){
+                        ar.get(2).add(article);
+                    }
+                    break;
+                case "west-germany":
+                    if (ar.get(3).size() < t){
+                        ar.get(3).add(article);
+                    }
+                    break;
+                case "france":
+                    if (ar.get(4).size() < t){
+                        ar.get(4).add(article);
+                    }
+                    break;
+                case "japan":
+                    if (ar.get(5).size() < t){
+                        ar.get(5).add(article);
+                    }
+                    break;
+            }
+        }
+        List<Article> output = new ArrayList<>();
+        for (List<Article> articleList : ar) {
+            output.addAll(articleList);
+        }
+        return output;
+    }
     public static Double accuracy(List<Article> articles) {
         double amount = 0.0;
         for (Article article : articles) {
@@ -66,8 +117,8 @@ public class Utils {
             if (vec1.get(i).getClass() == String.class) {
                 distance += bi_gram(vec1.get(i).toString(), vec2.get(i).toString());
             } else {
-                List<Integer> vecInside1 = (List<Integer>) vec1.get(i);
-                List<Integer> vecInside2 = (List<Integer>) vec2.get(i);
+                List<Double> vecInside1 = (List<Double>) vec1.get(i);
+                List<Double> vecInside2 = (List<Double>) vec2.get(i);
                 double sum = 0.0;
                 for (int j = 0; j < vecInside1.size(); j++) {
                     sum += Math.pow(vecInside1.get(j) - vecInside2.get(j), 2);
@@ -88,8 +139,8 @@ public class Utils {
             if (vec1.get(i).getClass() == String.class) {
                 distance.add(bi_gram(vec1.get(i).toString(), vec2.get(i).toString()));
             } else {
-                List<Integer> vecInside1 = (List<Integer>) vec1.get(i);
-                List<Integer> vecInside2 = (List<Integer>) vec2.get(i);
+                List<Double> vecInside1 = (List<Double>) vec1.get(i);
+                List<Double> vecInside2 = (List<Double>) vec2.get(i);
                 List<Double> sum = new ArrayList<>();
                 for (int j = 0; j < vecInside1.size(); j++) {
                     sum.add((double) Math.abs(vecInside1.get(j) - vecInside2.get(j)));
@@ -110,8 +161,8 @@ public class Utils {
             if (vec1.get(i).getClass() == String.class) {
                 distance += bi_gram(vec1.get(i).toString(), vec2.get(i).toString());
             } else {
-                List<Integer> vecInside1 = (List<Integer>) vec1.get(i);
-                List<Integer> vecInside2 = (List<Integer>) vec2.get(i);
+                List<Double> vecInside1 = (List<Double>) vec1.get(i);
+                List<Double> vecInside2 = (List<Double>) vec2.get(i);
                 double sum = 0.0;
                 for (int j = 0; j < vecInside1.size(); j++) {
                     sum += Math.abs(vecInside1.get(j) - vecInside2.get(j));

@@ -63,9 +63,9 @@ public class Article {
     }
 
     public void addThirdChar() {
-        List<Integer> countries = new ArrayList<>();
+        List<Double> countries = new ArrayList<>();
         for (List<String> list : Dictionaries.getDictionaries().getCountries()) {
-            int amount = 0;
+            double amount = 0;
             for (String country : list) {
                 int index = 0;
                 int geoLength = country.length();
@@ -119,15 +119,12 @@ public class Article {
         this.vector.add(Objects.requireNonNullElse(result, ""));
     }
 
-    /**
-     * TODO spaces
-     */
     public void addSixthChar() {
-        List<Integer> dates = new ArrayList<>();
+        List<Double> dates = new ArrayList<>();
         for (List<String> list : Dictionaries.getDictionaries().getYears()) {
-            int amount = 0;
+            double amount = 0;
             for (String date : list) {
-                if (body.contains(date)) {
+                if (body.contains(" " + date + " ")) {
                     amount += 1;
                     break;
                 }
@@ -175,9 +172,9 @@ public class Article {
     }
 
     public void addNinthChar() {
-        List<Integer> geos = new ArrayList<>();
+        List<Double> geos = new ArrayList<>();
         for (List<String> list : Dictionaries.getDictionaries().getGeographical()) {
-            int amount = 0;
+            double amount = 0;
             for (String geo : list) {
                 int index = 0;
                 int geoLength = geo.length();
