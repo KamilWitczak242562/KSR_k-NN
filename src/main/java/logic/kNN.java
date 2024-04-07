@@ -104,7 +104,7 @@ public class kNN {
     }
 
     private void createLists(List<Article> articles, double percentage) {
-        Collections.shuffle(articles);
+        Collections.shuffle(articles, new Random(5));
 
         int totalSize = articles.size();
         int firstListSize = (int) (totalSize * percentage/100.0);
