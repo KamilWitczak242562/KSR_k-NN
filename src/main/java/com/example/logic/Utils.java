@@ -1,11 +1,123 @@
-package logic;
+package com.example.logic;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.*;
 
 public class Utils {
+    private static List<String> countries = new ArrayList<>() {{
+        add("usa");
+        add("uk");
+        add("canada");
+        add("west-germany");
+        add("france");
+        add("japan");
+    }};
+
+    public static List<Integer> getFoundInCountry(List<Article> articles, String country) {
+        int usa = 0;
+        int uk = 0;
+        int canada = 0;
+        int germany = 0;
+        int france = 0;
+        int japan = 0;
+        List<Integer> output = new ArrayList<>();
+        for (Article article : articles) {
+            if (article.getPlace().equals(country)) {
+                switch (article.getFoundPlace()) {
+                    case "usa":
+                        usa += 1;
+                        break;
+                    case "uk":
+                        uk += 1;
+                        break;
+                    case "canada":
+                        canada += 1;
+                        break;
+                    case "west-germany":
+                        germany += 1;
+                        break;
+                    case "france":
+                        france += 1;
+                        break;
+                    case "japan":
+                        japan += 1;
+                        break;
+                }
+            }
+        }
+        output.add(usa);
+        output.add(uk);
+        output.add(canada);
+        output.add(germany);
+        output.add(france);
+        output.add(japan);
+        return output;
+    }
+
+    public static double averagePrecision(List<Article> articles) {
+        List<Integer> weights = getAllWeights(articles);
+        List<Double> precisions = new ArrayList<>();
+        for (String country : countries) {
+            precisions.add(precision(articles, country));
+        }
+        double sum = 0.0;
+        for (int i = 0; i < precisions.size(); i++) {
+            sum += weights.get(i) * precisions.get(i);
+        }
+        BigDecimal bigSum = new BigDecimal(sum);
+        BigDecimal bigSize = new BigDecimal(articles.size());
+        return bigSum.divide(bigSize, 3, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    public static double averageRecall(List<Article> articles) {
+        List<Integer> weights = getAllWeights(articles);
+        List<Double> recalls = new ArrayList<>();
+        for (String country : countries) {
+            recalls.add(recall(articles, country));
+        }
+        double sum = 0.0;
+        for (int i = 0; i < recalls.size(); i++) {
+            sum += weights.get(i) * recalls.get(i);
+        }
+        BigDecimal bigSum = new BigDecimal(sum);
+        BigDecimal bigSize = new BigDecimal(articles.size());
+        return bigSum.divide(bigSize, 3, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    public static double averageF1(List<Article> articles) {
+        List<Integer> weights = getAllWeights(articles);
+        List<Double> f1s = new ArrayList<>();
+        for (String country : countries) {
+            f1s.add(f_1(precision(articles, country), recall(articles, country)));
+        }
+        double sum = 0.0;
+        for (int i = 0; i < f1s.size(); i++) {
+            sum += weights.get(i) * f1s.get(i);
+        }
+        BigDecimal bigSum = new BigDecimal(sum);
+        BigDecimal bigSize = new BigDecimal(articles.size());
+        return bigSum.divide(bigSize, 3, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    public static List<Integer> getAllWeights(List<Article> articles) {
+        List<Integer> weights = new ArrayList<>();
+        for (String country : countries) {
+            weights.add(getWeight(articles, country));
+        }
+        return weights;
+    }
+
+    public static Integer getWeight(List<Article> articles, String country) {
+        int output = 0;
+        for (Article article : articles) {
+            if (article.getPlace().equals(country)) {
+                output += 1;
+            }
+        }
+        return output;
+    }
+
     public static List<Article> articlesAlignment(List<Article> articles, String country) {
         int t = 0;
         for (Article article : articles) {
@@ -13,39 +125,44 @@ public class Utils {
                 t += 1;
             }
         }
-        List<List<Article>> ar = new ArrayList<>(){{
-            add(new ArrayList<>()); add(new ArrayList<>()); add(new ArrayList<>()); add(new ArrayList<>());
-            add(new ArrayList<>()); add(new ArrayList<>()); add(new ArrayList<>());
+        List<List<Article>> ar = new ArrayList<>() {{
+            add(new ArrayList<>());
+            add(new ArrayList<>());
+            add(new ArrayList<>());
+            add(new ArrayList<>());
+            add(new ArrayList<>());
+            add(new ArrayList<>());
+            add(new ArrayList<>());
         }};
-        for (Article article: articles){
-            switch (article.getPlace()){
+        for (Article article : articles) {
+            switch (article.getPlace()) {
                 case "usa":
-                    if (ar.get(0).size() < t){
+                    if (ar.get(0).size() < t) {
                         ar.get(0).add(article);
                     }
                     break;
                 case "uk":
-                    if (ar.get(1).size() < t){
+                    if (ar.get(1).size() < t) {
                         ar.get(1).add(article);
                     }
                     break;
                 case "canada":
-                    if (ar.get(2).size() < t){
+                    if (ar.get(2).size() < t) {
                         ar.get(2).add(article);
                     }
                     break;
                 case "west-germany":
-                    if (ar.get(3).size() < t){
+                    if (ar.get(3).size() < t) {
                         ar.get(3).add(article);
                     }
                     break;
                 case "france":
-                    if (ar.get(4).size() < t){
+                    if (ar.get(4).size() < t) {
                         ar.get(4).add(article);
                     }
                     break;
                 case "japan":
-                    if (ar.get(5).size() < t){
+                    if (ar.get(5).size() < t) {
                         ar.get(5).add(article);
                     }
                     break;
@@ -57,6 +174,7 @@ public class Utils {
         }
         return output;
     }
+
     public static Double accuracy(List<Article> articles) {
         double amount = 0.0;
         for (Article article : articles) {

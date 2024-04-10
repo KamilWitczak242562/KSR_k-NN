@@ -40,6 +40,7 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
 }
 
 test {
@@ -56,4 +57,12 @@ jlink {
 
 jlinkZip {
     group = 'distribution'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.example.knn.HelloApplication'
+        )
+    }
 }

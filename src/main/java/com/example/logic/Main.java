@@ -1,4 +1,4 @@
-package logic;
+package com.example.logic;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,6 +45,8 @@ public class Main {
             System.out.println("Recall: " + Utils.recall(testE, country));
             System.out.println("F1: " + Utils.f_1(Utils.precision(testE, country), Utils.recall(testE, country)));
         }
-
+        System.out.println(Utils.averagePrecision(testE));
+        System.out.println(Utils.averageRecall(testE));
+        System.out.println(Utils.averageF1(testE));
     }
 }
