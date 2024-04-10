@@ -66,7 +66,7 @@ public class Utils {
         }
         BigDecimal bigAmount = BigDecimal.valueOf(amount);
         BigDecimal size = BigDecimal.valueOf(articles.size());
-        BigDecimal result = bigAmount.divide(size, 2, RoundingMode.HALF_UP);
+        BigDecimal result = bigAmount.divide(size, 3, RoundingMode.HALF_UP);
         return result.doubleValue();
     }
 
@@ -81,10 +81,14 @@ public class Utils {
                 amount += 1.0;
             }
         }
-        BigDecimal bigAmount = BigDecimal.valueOf(amount);
-        BigDecimal bigMeter = BigDecimal.valueOf(meter);
-        BigDecimal result = bigMeter.divide(bigAmount, 2, RoundingMode.HALF_UP);
-        return result.doubleValue();
+        if (amount != 0) {
+            BigDecimal bigAmount = BigDecimal.valueOf(amount);
+            BigDecimal bigMeter = BigDecimal.valueOf(meter);
+            BigDecimal result = bigMeter.divide(bigAmount, 3, RoundingMode.HALF_UP);
+            return result.doubleValue();
+        } else {
+            return 0.0;
+        }
     }
 
     public static Double recall(List<Article> articles, String country) {
@@ -100,15 +104,19 @@ public class Utils {
         }
         BigDecimal bigAmount = BigDecimal.valueOf(amount);
         BigDecimal bigMeter = BigDecimal.valueOf(meter);
-        BigDecimal result = bigMeter.divide(bigAmount, 2, RoundingMode.HALF_UP);
+        BigDecimal result = bigMeter.divide(bigAmount, 3, RoundingMode.HALF_UP);
         return result.doubleValue();
     }
 
     public static Double f_1(double precision, double recall) {
-        BigDecimal bigPrecision = BigDecimal.valueOf(precision);
-        BigDecimal bigRecall = BigDecimal.valueOf(recall);
-        BigDecimal result = BigDecimal.TWO.multiply(bigPrecision.multiply(bigRecall).divide(bigPrecision.add(bigRecall), 2, RoundingMode.HALF_UP));
-        return result.doubleValue();
+        if (precision != 0) {
+            BigDecimal bigPrecision = BigDecimal.valueOf(precision);
+            BigDecimal bigRecall = BigDecimal.valueOf(recall);
+            BigDecimal result = BigDecimal.TWO.multiply(bigPrecision.multiply(bigRecall).divide(bigPrecision.add(bigRecall), 3, RoundingMode.HALF_UP));
+            return result.doubleValue();
+        } else {
+            return 0.0;
+        }
     }
 
     public static Double euklides(List<Object> vec1, List<Object> vec2) {
@@ -128,7 +136,7 @@ public class Utils {
         }
         BigDecimal sqrtValue = BigDecimal.valueOf(Math.sqrt(distance));
 
-        BigDecimal roundedValue = sqrtValue.setScale(2, RoundingMode.HALF_UP);
+        BigDecimal roundedValue = sqrtValue.setScale(3, RoundingMode.HALF_UP);
 
         return roundedValue.doubleValue();
     }
@@ -150,7 +158,7 @@ public class Utils {
         }
         BigDecimal result = BigDecimal.valueOf(Collections.max(distance));
 
-        BigDecimal roundedValue = result.setScale(2, RoundingMode.HALF_UP);
+        BigDecimal roundedValue = result.setScale(3, RoundingMode.HALF_UP);
 
         return roundedValue.doubleValue();
     }
@@ -172,7 +180,7 @@ public class Utils {
         }
         BigDecimal result = BigDecimal.valueOf(distance);
 
-        BigDecimal roundedValue = result.setScale(2, RoundingMode.HALF_UP);
+        BigDecimal roundedValue = result.setScale(3, RoundingMode.HALF_UP);
 
         return roundedValue.doubleValue();
     }
@@ -193,7 +201,7 @@ public class Utils {
 
         if (len == 1) return 0.0;
 
-        BigDecimal result = BigDecimal.ONE.subtract(similarityBigDecimal.divide(lenBigDecimal, 2, RoundingMode.HALF_UP));
+        BigDecimal result = BigDecimal.ONE.subtract(similarityBigDecimal.divide(lenBigDecimal, 3, RoundingMode.HALF_UP));
         return result.doubleValue();
     }
 }

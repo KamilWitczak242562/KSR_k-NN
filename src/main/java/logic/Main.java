@@ -1,12 +1,21 @@
 package logic;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
         List<Article> allArticles;
+        List<String> countries = new ArrayList<>() {{
+            add("usa");
+            add("uk");
+            add("canada");
+            add("west-germany");
+            add("france");
+            add("japan");
+        }};
         try {
             allArticles = ArticlesLoader.loadData(20000, "all");
         } catch (IOException e) {
@@ -26,24 +35,16 @@ public class Main {
             article.addEleventhChar();
         }
         List<Article> newArticles = Utils.articlesAlignment(allArticles, "france");
-        for (int i = 3; i <= 9; i += 2) {
-            kNN kNNE = new kNN(newArticles, i, "Euklidesowa", 80);
-            kNNE.predict();
-            List<Article> testE = kNNE.getTestArticles();
-            kNN kNNC = new kNN(newArticles, i, "Czebyszewa", 80);
-            kNNC.predict();
-            List<Article> testC = kNNC.getTestArticles();
-            kNN kNNM = new kNN(newArticles, i, "Miejska", 80);
-            kNNM.predict();
-            List<Article> testM = kNNM.getTestArticles();
-            double accE = Utils.accuracy(testE);
-            double accC = Utils.accuracy(testC);
-            double accM = Utils.accuracy(testM);
-            System.out.println("Acc dla Euklidesa, k = " + i + ", acc = " + accE);
-            System.out.println("Acc dla Czebyszewa, k = " + i + ", acc = " + accC);
-            System.out.println("Acc dla Miejskiej, k = " + i + ", acc = " + accM);
+        kNN kNNE = new kNN(newArticles, 5, "Euklidesowa", 80);
+        kNNE.predict();
+        List<Article> testE = kNNE.getTestArticles();
+        System.out.println(Utils.accuracy(testE));
+        for (String country: countries) {
+            System.out.println(country);
+            System.out.println("Precision: " + Utils.precision(testE, country));
+            System.out.println("Recall: " + Utils.recall(testE, country));
+            System.out.println("F1: " + Utils.f_1(Utils.precision(testE, country), Utils.recall(testE, country)));
         }
-
 
     }
 }
